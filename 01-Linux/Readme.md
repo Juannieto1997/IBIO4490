@@ -176,11 +176,11 @@ See [here](ssh.md) for different types of SSH connection with respect to your OS
 
 1. What is the ``grep``command?
 
-2. What is the meaning of ``#!/bin/python`` at the start of scripts?
+2. What is the meaning of ``#!/bin/python`` at the start of scripts? 
 
 3. Download using ``wget`` the [*bsds500*](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html#bsds500) image segmentation database, and decompress it using ``tar`` (keep it in you hard drive, we will come back over this data in a few weeks).
  
-4. What is the disk size of the uncompressed dataset, How many images are in the directory 'BSR/BSDS500/data/images'?
+4. What is the disk size of the uncompressed dataset, How many images are in the directory 'BSR/BSDS500/data/images'? para encontrar el numero de imagenes se utilizó el comando find . *.jpg | wc -l con lo que se obtubo un total de 507 imagenes 
  
 5. What are all the different resolutions? What is their format? Tip: use ``awk``, ``sort``, ``uniq`` 
 
@@ -195,9 +195,7 @@ For every question write a detailed description of all the commands/scripts you 
 
 Feel free to search for help on the internet, but ALWAYS report any external source you used.
 
-Notice some of the questions actually require you to connect to the course server, the login instructions and credentials will be provided on the first session. 
-
-## Deadline
+Notice some of the questions actually require you to connect to the course server, the login instructions and credentials will be provided on the first session. ## Deadline
 
 We will be delivering every lab through the [github](https://github.com) tool (Silly link isn't it?). According to our schedule we will complete that tutorial on the second week, therefore the deadline for this lab will be specially long **February 7 11:59 pm, (it is the same as the second lab)** 
 
@@ -205,6 +203,21 @@ We will be delivering every lab through the [github](https://github.com) tool (S
 
 http://www.ee.surrey.ac.uk/Teaching/Unix/ 
 
-
+# Solución 
+1. El comando grep permite encontrar patrones en un archivo dado, la sitaxis de este comando esta dada por: grep 'texto a buscar' archivo 
+2. La linea de codigo permite identifica al script como un codigo de python y así mismo que sea ejecutado como uno, encaso de utilizar otro lenguaje se utiliza los mismo elementos sin embargo se modifica el lenguaje al final de la linea. 
+3. Para cumplir con la instrucción se utilizan los comandos: 
+	En primer lugar se obtiene descarga el grupo de datos del link dado 
+		wget http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz 
+	una vez descargado el archivo, es necesario descomprimir los archivos para lo cual se utiliza el comando mostrado a continuación
+		tar -x -f BSR_bsds500.tgz 
+4. Con el fin de encontrar el tamaño del archivo se utiliza el comando du -sh sobre la carpeta con lo que se obtiene un tamaño de 73MB el cual corresponde al verificarlo a traves de la interfaz grafica 
+5. En este caso, se utiliza el comando find . -name  '*.jpg'  | wc -l  para encontrar el numero total de imagenes con lo que se obtiene un total de 500 imagenes con extención jpg. 
+ Ahora, el objetivo es encontrar las resoluciones de las imagenes para lo que se requiere el sigueinte comando 
+	find . -iname '*.jpg' -type f | xargs -I {} identify -format '%wx%h\n' {} | awk {print} | sort -u
+	en este caso se obtienen dos resuluciones, 321 x 481 y 481 x 321
+6. En el caso de que se desee contar el numero de elementos en con un vlaor dado se puede utilizar el siguiente comando find . -iname '*.jpg' -type f | xargs -I {} identify -format '%wx%h\n' {} | grep '481x321'
+ | wc -l con lo que se obtuvo que 348 imagenes corresponden a landscape 
+7. Finalmente, se desea reescalar las imagenes para que queden en con las mismas dimenciones 256x256 en este caso el comando para realizarlo es: find . -iname '*.jpg' | xargs mogrify -crop 256x256+0+0 +repage  
 
 
