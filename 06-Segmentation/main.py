@@ -1,4 +1,4 @@
-#!/home/afromero/anaconda3/bin/ipython
+#!/home/juan/anaconda3/bin/ipython
 # Change this line 
 
 def imshow(img, seg, title='Image'):
@@ -28,7 +28,7 @@ def check_dataset(folder):
 if __name__ == '__main__':
     import argparse
     import imageio
-    from Segment import segmentByClustering # Change this line if your function has a different name
+    from seg import segmentByClustering # Change this line if your function has a different name
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--color', type=str, default='rgb', choices=['rgb', 'lab', 'hsv', 'rgb+xy', 'lab+xy', 'hsv+xy']) # If you use more please add them to this list.
